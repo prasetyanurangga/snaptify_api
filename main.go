@@ -140,11 +140,6 @@ type RequestTrackKeyword struct{
 }
 
 func getEnv(key string) string {
-//   err := godotenv.Load(".env")
-//   if err != nil {
-//     log.Fatal("Error loading .env file")
-//   }
-
 
   return os.Getenv(key)
 }
@@ -161,12 +156,6 @@ func CORSMiddleware() gin.HandlerFunc {
             return
         }
 	    
-	ip := c.ClientIP()
-
-        if ip != getEnv("WHITE_LIST_IP") {
-        	c.AbortWithStatus(500)
-            return
-        }
 
         c.Next()
     }
