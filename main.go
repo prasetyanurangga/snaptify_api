@@ -156,9 +156,9 @@ func CORSMiddleware() gin.HandlerFunc {
             return
         }
 	    
-	token := c.Request.Header["token"]
+	ip := c.ClientIP()
 
-        if token != getEnv("TOKEN") {
+        if ip != getEnv("WHITE_LIST_IP") {
         	c.AbortWithStatus(500)
             return
         }
