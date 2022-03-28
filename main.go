@@ -156,6 +156,13 @@ func CORSMiddleware() gin.HandlerFunc {
             return
         }
 	    
+	token := c.Request.Header["token"]
+
+        if token != getEnv("TOKEN") {
+        	c.AbortWithStatus(500)
+            return
+        }
+	    
 
         c.Next()
     }
