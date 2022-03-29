@@ -175,7 +175,7 @@ func main() {
         var requestTrackKeyword RequestTrackKeyword
         c.BindJSON(&requestTrackKeyword)
         tracks := getTrackSpotify(requestTrackKeyword.Keyword)
-        c.JSON(200, gin.H{"data" : ip + " = " + localIp}) // Your custom response here
+        c.JSON(200, gin.H{"data" : tracks}) // Your custom response here
     })
 
     router.POST("/get_by_image", func(c *gin.Context) {
