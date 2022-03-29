@@ -156,12 +156,12 @@ func CORSMiddleware() gin.HandlerFunc {
             return
         }
 	    
-	ip := c.ClientIP()
+// 	ip := c.ClientIP()
 
-        if ip != getEnv("WHITE_LIST_IP") {
-        	c.AbortWithStatus(500)
-            return
-        }
+//         if ip != getEnv("WHITE_LIST_IP") {
+//         	c.AbortWithStatus(500)
+//             return
+//         }
 	    
 
         c.Next()
