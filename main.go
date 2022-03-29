@@ -176,7 +176,7 @@ func main() {
 //         c.BindJSON(&requestTrackKeyword)
 //         tracks := getTrackSpotify(requestTrackKeyword.Keyword)
 	    ip := c.ClientIP()
-	    localIp = getEnv("WHITE_LIST_IP")
+	    localIp := getEnv("WHITE_LIST_IP")
         c.JSON(200, gin.H{"data" : ip + " = " + localIp}) // Your custom response here
     })
 
