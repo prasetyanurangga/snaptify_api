@@ -166,15 +166,12 @@ func CORSMiddleware() gin.HandlerFunc {
             return
         }
 	    
-	origin := c.Request.Header["Origin"]
+		token := c.Request.Header["Token"]
 	    
-	    if contains(origin, getEnv("WHITE_LIST_IP")) {
+	    if !contains(token, getEnv("TOKEN")) {
             c.AbortWithStatus(500)
             return
         }
-	    
-	    
-	    
 
         c.Next()
     }
@@ -187,6 +184,7 @@ func main() {
         var requestTrackKeyword RequestTrackKeyword
         c.BindJSON(&requestTrackKeyword)
         tracks := getTrackSpotify(requestTrackKeyword.Keyword)
+
         c.JSON(200, gin.H{"data" : tracks}) // Your custom response here
     })
 
