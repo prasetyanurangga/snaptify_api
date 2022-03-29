@@ -156,12 +156,12 @@ func CORSMiddleware() gin.HandlerFunc {
             return
         }
 	    
-// 	ip := c.ClientIP()
+	ip := c.ClientIP()
 
-//         if ip != getEnv("WHITE_LIST_IP") {
-//         	c.AbortWithStatus(500)
-//             return
-//         }
+        if ip != getEnv("WHITE_LIST_IP") {
+        	c.AbortWithStatus(500)
+            return
+        }
 	    
 
         c.Next()
@@ -172,11 +172,9 @@ func main() {
 	router := gin.Default()
 	router.Use(CORSMiddleware())
     router.POST("/get_by_keyword", func(c *gin.Context) {
-//         var requestTrackKeyword RequestTrackKeyword
-//         c.BindJSON(&requestTrackKeyword)
-//         tracks := getTrackSpotify(requestTrackKeyword.Keyword)
-	    ip := c.ClientIP()
-	    localIp := getEnv("WHITE_LIST_IP")
+        var requestTrackKeyword RequestTrackKeyword
+        c.BindJSON(&requestTrackKeyword)
+        tracks := getTrackSpotify(requestTrackKeyword.Keyword)
         c.JSON(200, gin.H{"data" : ip + " = " + localIp}) // Your custom response here
     })
 
