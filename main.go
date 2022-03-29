@@ -144,6 +144,16 @@ func getEnv(key string) string {
   return os.Getenv(key)
 }
 
+func contains(s []string, str string) bool {
+	for _, v := range s {
+		if v == str {
+			return true
+		}
+	}
+
+	return false
+}
+
 func CORSMiddleware() gin.HandlerFunc {
     return func(c *gin.Context) {
         c.Writer.Header().Set("Access-Control-Allow-Origin", "*")
@@ -158,7 +168,7 @@ func CORSMiddleware() gin.HandlerFunc {
 	    
 	origin := c.Request.Header["Origin"]
 	    
-	if origin != getEnv("WHITE_LIST_IP") {
+	    if contains(origin, getEnv("WHITE_LIST_IP")) {
             c.AbortWithStatus(500)
             return
         }
