@@ -146,22 +146,15 @@ func getEnv(key string) string {
 
 func CORSMiddleware() gin.HandlerFunc {
     return func(c *gin.Context) {
-        c.Writer.Header().Set("Access-Control-Allow-Origin", "*")
+        c.Writer.Header().Set("Access-Control-Allow-Origin", getEnv("WHITE_LIST_IP"))
         c.Writer.Header().Set("Access-Control-Allow-Credentials", "true")
         c.Writer.Header().Set("Access-Control-Allow-Headers", "Content-Type, Content-Length, Accept-Encoding, X-CSRF-Token, Authorization, accept, origin, Cache-Control, X-Requested-With")
-        c.Writer.Header().Set("Access-Control-Allow-Methods", "POST, OPTIONS, GET, PUT")
+        c.Writer.Header().Set("Access-Control-Allow-Methods", "POST")
 
         if c.Request.Method == "OPTIONS" {
             c.AbortWithStatus(204)
             return
         }
-	    
-// 	ip := c.ClientIP()
-
-//         if ip != getEnv("WHITE_LIST_IP") {
-//         	c.AbortWithStatus(500)
-//             return
-//         }
 	    
 
         c.Next()
@@ -172,12 +165,10 @@ func main() {
 	router := gin.Default()
 	router.Use(CORSMiddleware())
     router.POST("/get_by_keyword", func(c *gin.Context) {
-//         var requestTrackKeyword RequestTrackKeyword
-//         c.BindJSON(&requestTrackKeyword)
-//         tracks := getTrackSpotify(requestTrackKeyword.Keyword)
-	    host := c.Request.Host
-	    localIp := getEnv("WHITE_LIST_IP")
-        c.JSON(200, gin.H{"data" : host + "="+ localIp}) // Your custom response here
+        var requestTrackKeyword RequestTrackKeyword
+        c.BindJSON(&requestTrackKeyword)
+        tracks := getTrackSpotify(requestTrackKeyword.Keyword)
+        c.JSON(200, gin.H{"data" : tracks}) // Your custom response here
     })
 
     router.POST("/get_by_image", func(c *gin.Context) {
